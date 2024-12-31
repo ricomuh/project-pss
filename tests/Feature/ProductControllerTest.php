@@ -28,7 +28,7 @@ class ProductControllerTest extends TestCase
     {
         Product::factory()->count(15)->create();
 
-        $response = $this->getJson('/api/products');
+        $response = $this->getJson(route('products.index'));
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -51,7 +51,7 @@ class ProductControllerTest extends TestCase
             'stock' => 10,
         ];
 
-        $response = $this->postJson('/api/products', $productData);
+        $response = $this->postJson(route('products.store'), $productData);
 
         $response->assertStatus(201)
             ->assertJson([
@@ -69,7 +69,7 @@ class ProductControllerTest extends TestCase
     {
         $product = Product::factory()->create();
 
-        $response = $this->getJson('/api/products/' . $product->id);
+        $response = $this->getJson(route('products.show', $product->id));
 
         $response->assertStatus(200)
             ->assertJson($product->toArray());
@@ -89,7 +89,7 @@ class ProductControllerTest extends TestCase
             'stock' => 20,
         ];
 
-        $response = $this->putJson('/api/products/' . $product->id, $updatedData);
+        $response = $this->putJson(route('products.update', $product->id), $updatedData);
 
         $response->assertStatus(200)
             ->assertJson([
@@ -107,7 +107,7 @@ class ProductControllerTest extends TestCase
     {
         $product = Product::factory()->create();
 
-        $response = $this->deleteJson('/api/products/' . $product->id);
+        $response = $this->deleteJson(route('products.destroy', $product->id));
 
         $response->assertStatus(200)
             ->assertJson(['message' => 'Product deleted successfully']);
