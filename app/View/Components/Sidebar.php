@@ -38,7 +38,11 @@ class Sidebar extends Component
                 'route' => 'admin.products.index',
                 'icon' => 'fas fa-box',
             ],
-
+            [
+                'name' => 'Orders',
+                'route' => 'admin.orders.index',
+                'icon' => 'fas fa-shopping-cart',
+            ],
         ];
 
         // if (auth()->user()->role_id === RoleEnum::ADMIN) {

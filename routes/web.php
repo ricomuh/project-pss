@@ -16,6 +16,8 @@ Route::middleware('auth')->as('admin.')->group(function () {
     Route::delete('/customers/{user}', [App\Http\Controllers\Admin\CustomerController::class, 'destroy'])->name('customers.destroy');
 
     Route::resource('products', ProductController::class);
+
+    Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
 });
 
 require __DIR__ . '/auth.php';
