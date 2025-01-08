@@ -28,6 +28,11 @@ class Sidebar extends Component
                 'route' => 'dashboard',
                 'icon' => 'fas fa-tachometer-alt',
             ],
+            [
+                'name' => 'Customers',
+                'route' => 'admin.customers.index',
+                'icon' => 'fas fa-users',
+            ]
         ];
 
         // if (auth()->user()->role_id === RoleEnum::ADMIN) {
