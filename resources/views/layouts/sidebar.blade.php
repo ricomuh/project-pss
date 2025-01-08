@@ -29,7 +29,7 @@
                     <!-- ({{ auth()->user()->role_name }}) -->
                     <!-- <br> -->
 
-                    <!-- ({{ str(auth()->user()->role_name)->title() }}) -->
+                    {{-- <!-- ({{ str(auth()->user()->role_name)->title() }}) --> --}}
                 </a>
             </div>
         </div>
