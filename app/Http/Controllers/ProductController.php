@@ -23,13 +23,23 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|unique:products',
             'description' => '',
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
         ]);
 
-        $product = Product::create($request->all());
+        // $product = Product::create($request->all());
+        $imagePath = $request->file('image')->store('products', 'public');
+
+        $product = Product::create([
+            'image_url' => asset('storage/' . $imagePath),
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'stock' => $request->stock,
+        ]);
 
         return response()->json(['message' => 'Product created successfully', 'product' => $product], 201);
     }
@@ -48,13 +58,26 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
+            // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|unique:products,name,' . $product->id,
             'description' => '',
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
         ]);
 
-        $product->update($request->all());
+        // $product->update($request->all());
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $image_url = asset('storage/' . $imagePath);
+        }
+
+        $product->update([
+            'image_url' => $image_url ?? $product->image_url,
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'stock' => $request->stock,
+        ]);
 
         return response()->json(['message' => 'Product updated successfully', 'product' => $product]);
     }
