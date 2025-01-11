@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -19,6 +20,11 @@ Route::prefix('auth')->as('api.auth.')->group(function () {
         Route::get('/user', [UserController::class, 'show'])->name('show');
         Route::put('/user', [UserController::class, 'update'])->name('update');
     });
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/orders', [OrderController::class, 'show'])->name('orders');
+    Route::post('/orders', [OrderController::class, 'order'])->name('order');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
