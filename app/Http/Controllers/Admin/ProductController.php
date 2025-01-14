@@ -84,8 +84,17 @@ class ProductController extends Controller
             'stock' => 'required|numeric',
         ]);
 
+        if ($request->file('image')) {
+            // delete old image
+            // \Storage::disk('public')->delete($product->image_url);
+
+            // upload new image and get the full path from /storage/products
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
         $product->update([
-            'image_url' => $request->file('image') ? $request->file('image')->store('products', 'public') : $product->image_url,
+            // 'image_url' => $request->file('image') ? $request->file('image')->store('products', 'public') : $product->image_url,
+            'image_url' => $request->file('image') ? asset('storage/' . $imagePath) : $product->image_url,
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
